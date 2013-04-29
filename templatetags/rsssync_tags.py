@@ -18,7 +18,7 @@ class LatestEntries(template.Node):
             return var
 
         feed = resolve_or_not(self.feed, context)
-        limit = resolve_or_not(self.limit, context)
+        limit = int(resolve_or_not(self.limit, context))
         varname = resolve_or_not(self.varname, context)
 
         if not isinstance(feed, RssFeed):
@@ -27,7 +27,7 @@ class LatestEntries(template.Node):
             except RssFeed.DoesNotExist:
                 raise
 
-        context[varname] = feed.rssentry_set.all()[:int(limit)]
+        context[varname] = feed.rssentry_set.all().order_by('-date')[:limit]
         return u''
 
 
