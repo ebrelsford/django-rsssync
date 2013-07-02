@@ -24,3 +24,9 @@ class RssSyncHelper(object):
         feed = feedparser.parse(self.feed.url)
         for entry in feed.entries:
             self.save_entry(entry)
+
+    def sync_wordpress_paginated(self, page):
+        """Sync a Wordpress paginated feed"""
+        feed = feedparser.parse('%s&paged=%d' % (self.feed.url, page))
+        for entry in feed.entries:
+            self.save_entry(entry)
