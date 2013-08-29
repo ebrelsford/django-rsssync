@@ -4,6 +4,18 @@ import datetime
 from .models import RssEntry
 
 
+def add_custom_acceptable_elements(elements):
+    """
+    Add custom acceptable elements so iframes and other potential video
+    elements will get synched.
+    """
+    elements += list(feedparser._HTMLSanitizer.acceptable_elements)
+    feedparser._HTMLSanitizer.acceptable_elements = set(elements)
+
+custom_acceptable_elements = ['iframe', 'embed', 'object',]
+add_custom_acceptable_elements(custom_acceptable_elements)
+
+
 class RssSyncHelper(object):
 
     def __init__(self, feed):
