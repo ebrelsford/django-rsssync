@@ -29,6 +29,7 @@ setup(
     classifiers=CLASSIFIERS,
     install_requires=[
         'Django>=1.6.1',
+        'django-classy-tags==0.4',
         'feedparser>=5.1.3',
     ],
     packages=find_packages(),
