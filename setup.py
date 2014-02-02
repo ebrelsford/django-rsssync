@@ -31,6 +31,7 @@ setup(
         'Django>=1.6.1',
         'django-classy-tags==0.4',
         'feedparser>=5.1.3',
+        'pyquery>=1.2.8',
     ],
     packages=find_packages(),
     include_package_data=True,

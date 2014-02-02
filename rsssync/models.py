@@ -22,6 +22,8 @@ class RssEntry(models.Model):
     link = models.URLField(_('link'), blank=True, null=True)
     date = models.DateTimeField(_('date'), blank=True, null=True)
     feed = models.ForeignKey('RssFeed')
+    cover_image_url = models.URLField(_('cover image url'), blank=True,
+                                      null=True)
 
     def __unicode__(self):
         return '%s: "%s"' % (self.feed.name, self.title)
