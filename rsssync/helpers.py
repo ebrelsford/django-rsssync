@@ -26,14 +26,20 @@ class RssSyncHelper(object):
         content = result.content[0]['value']
         pub_date = result.updated_parsed
         published = datetime.date(pub_date[0], pub_date[1], pub_date[2])
-        return RssEntry.objects.get_or_create(
-            title=result.title,
+
+        kwargs = {
+            'title': result.title,
+            'summary': content,
+            'date': published,
+            'cover_image_url': self.get_cover_image(content),
+        }
+        instance, created = RssEntry.objects.get_or_create(
             feed=self.feed,
-            summary=content,
             link=result.link,
-            date=published,
-            cover_image_url=self.get_cover_image(content),
+            defaults=kwargs,
         )
+        if not created:
+            RssEntry.objects.filter(pk=instance.pk).update(**kwargs)
 
     def get_cover_image(self, content):
         """
